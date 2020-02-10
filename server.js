@@ -20,7 +20,7 @@ mongoose.connect(`mongodb://localhost/ScrapeRepository`, { useNewUrlParser: true
 app.get(`/scrape`, function(req, res){
     axios.get(`https://www.reuters.com/news/us`).then(function(res){
 
-        const $ = cheerio.load(response.data);
+        const $ = cheerio.load(res.data);
 
 
         $(`.FeedItemHeadline_headline`).each(function(i, element) {
@@ -55,3 +55,18 @@ app.get(`/scrape`, function(req, res){
 
 
 // });
+
+
+
+
+
+
+
+
+
+
+
+app.listen(PORT, function() {
+
+    console.log(`APP RUNNING ON PORT: ${PORT}`);
+});
