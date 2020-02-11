@@ -16,8 +16,8 @@ app.use(express.json());
 app.use(express.static("public"));
 
 //HANDLEBARS CODE
-app.engine(`handlebars`, exhbrs({ defaultLayout: `main`}));
-app.set(`view engine`, `handlebars`);
+app.engine("handlebars", exhbrs({ defaultLayout: "main"}));
+app.set("view engine", "handlebars");
 
 
 
@@ -51,36 +51,26 @@ app.get(`/scrape`, function(req, res){
     });
 
 });
-// app.get(`/scrape`, function(req, res){
-//     axios.get(`https://www.reuters.com/news/us`). then(function(res){
-//         const $ = cheerio.load(response.data);
 
 
+app.get(`/articles`, function(req, res){
 
-//         $(`.`)
-
-
-
-//     })
+    db.Article.find({}).then(function(data){
+        
 
 
-
-// });
-
-app.get(`/`, function(req, res){
-
-    db.ArticleSchema.find({}).then(function(data){
-        const fetch = {
-            article: data
-        }
-
-
-
-        res.render(`index`, fetch);
-
+        
+        res.json(data);
+       
+    }).catch(function(error){
+        res.json(error);
     });
 });
 
+
+app.get(`/`, function (req, res) {
+    res.render(`index`, {});
+  });
 
 
 
