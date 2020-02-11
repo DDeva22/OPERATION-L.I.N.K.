@@ -15,6 +15,16 @@ app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(express.static("public"));
 
+//HANDLEBARS CODE
+app.engine(`handlebars`, exhbrs({ defaultLayout: `main`}));
+app.set(`view engine`, `handlebars`);
+
+
+
+
+
+
+
 mongoose.connect(`mongodb://localhost/ScrapeRepository`, { useNewUrlParser: true });
 
 app.get(`/scrape`, function(req, res){
@@ -29,6 +39,7 @@ app.get(`/scrape`, function(req, res){
 
             resObject.title = $(this).children("a").text();
             resObject.link = $(this).children("a").attr(`href`);
+            resObject.imgLink = $()
 
 
             db.Article.create(resObject).then(function(data){
@@ -36,7 +47,7 @@ app.get(`/scrape`, function(req, res){
             });
 
         });
-        res.send(`SCRAPING COMPLETE`);
+        res.send(`index`, `SCRAPING COMPLETE`);
     });
 
 });
@@ -55,6 +66,20 @@ app.get(`/scrape`, function(req, res){
 
 
 // });
+
+app.get(`/`, function(req, res){
+
+    db.ArticleSchema.find({}).then(function(data){
+        const fetch = {
+            article: data
+        }
+
+
+
+        res.render(`index`, fetch);
+
+    });
+});
 
 
 
