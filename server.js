@@ -32,6 +32,20 @@ app.get(`/scrape`, function(req, res){
 
         const $ = cheerio.load(res.data);
 
+        let imgHolder = [];
+
+        $(`.ImageStoryTemplate_image-story-container > span > a > img`).each(function(i, element) {
+            let resObject = {};
+            console.log(element.attribs.src);
+            console.log(i);
+            imgHolder.push(element.attribs.src);
+
+
+
+            
+
+        });
+
 
         $(`.FeedItemHeadline_headline`).each(function(i, element) {
             let resObject = {};
@@ -39,18 +53,34 @@ app.get(`/scrape`, function(req, res){
 
             resObject.title = $(this).children("a").text();
             resObject.link = $(this).children("a").attr(`href`);
-            resObject.imgLink = $()
+            resObject.imgLink = imgHolder[i];
 
 
-            db.Article.create(resObject).then(function(data){
-                console.log(data);
-            });
+            db.Article.create(resObject).then(function(data){});
+            if( i > 21){
+                return false;
+            }
 
         });
-        res.send(`index`, `SCRAPING COMPLETE`);
+        
+           
+
+
+
+
+
+
+        // res.send(`index`, `SCRAPING COMPLETE`);
     });
 
 });
+
+
+
+
+
+
+
 
 
 app.get(`/articles`, function(req, res){

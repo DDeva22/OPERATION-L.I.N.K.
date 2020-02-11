@@ -13,6 +13,10 @@ const ArticleSchema = new Schema({
         type: String,
         required: true
     },
+    imgLink: {
+        type: String
+
+    },
     note: {
         type: Schema.Types.ObjectId,
         ref: `Note`
