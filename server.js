@@ -32,36 +32,73 @@ app.get(`/scrape`, function(req, res){
 
         const $ = cheerio.load(res.data);
 
-        let imgHolder = [];
+        let resObject = {};
 
-        $(`.ImageStoryTemplate_image-story-container > span > a > img`).each(function(i, element) {
-            let resObject = {};
-            console.log(element.attribs.src);
-            console.log(i);
-            imgHolder.push(element.attribs.src);
+
+
+        $(`.ImageStoryTemplate_image-story-container`).each( function(i, element){
+            let link;
+            let title;
+            let imgLink;
+
+
+
+            imgLink = $(element).children().children().children("img").attr("src");
+            link = $(element).children().children().children(`a`).attr(`href`);
+            title = $(element).children().children().children(`a`).text();
+
+
+
+
+            resObject.title = title;
+            resObject.link = link;
+            resObject.imgLink = imgLink
+
+            db.Article.create(resObject).then(function(data){});
+            console.log(`INFORMATION SCRAPED`);
+
+            if( i > 21){
+                return false;
+            }
+
+
+        });
+
+
+
+
+
+
+
+
+        // $(`.ImageStoryTemplate_image-story-container > span > a > img`).each(function(i, element) {
+        //     let resObject = {};
+        //     console.log(element.attribs.src);
+        //     console.log(i);
+        //     imgHolder.push(element.attribs.src);
 
 
 
             
 
-        });
+        // });
 
 
-        $(`.FeedItemHeadline_headline`).each(function(i, element) {
-            let resObject = {};
+        // $(`.FeedItemHeadline_headline`).each(function(i, element) {
+        //     let resObject = {};
 
 
-            resObject.title = $(this).children("a").text();
-            resObject.link = $(this).children("a").attr(`href`);
-            resObject.imgLink = imgHolder[i];
+        //     resObject.title = $(this).children("a").text();
+        //     resObject.link = $(this).children("a").attr(`href`);
+        //     resObject.imgLink = imgHolder[i];
 
 
-            db.Article.create(resObject).then(function(data){});
-            if( i > 21){
-                return false;
-            }
+        //     db.Article.create(resObject).then(function(data){});
+        //     if( i > 21){
+        //         return false;
+        //     }
 
-        });
+        // });
         
            
 
