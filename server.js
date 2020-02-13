@@ -20,7 +20,7 @@ app.engine("handlebars", exhbrs({ defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 
 
-
+mongoose.set('useFindAndModify', false);
 
 
 
@@ -133,6 +133,101 @@ app.get(`/articles`, function(req, res){
         res.json(error);
     });
 });
+
+app.get(`/articles/:id`, function(req, res){
+
+    db.Article.findOne({
+        _id: req.params.id
+    }).populate(`note`).then(function(articleNote){
+        
+
+
+        res.json(articleNote.note.body);
+        
+    })
+
+
+
+
+});
+
+
+
+
+
+
+
+app.post(`/articles/:id`, function(req, res){
+    let noteSituation;
+
+    db.Note.create(req.body).then(function(data){
+        return db.Article.findOneAndUpdate(
+            {_id: req.params.id},
+            {note: data._id},
+            {new: true}
+        ).then(function(databasedArticle) {
+            // If we were able to successfully update an Article, send it back to the client
+            res.json(databasedArticle);
+            console.log(databasedArticle)
+          });
+
+    }).catch(function(error){
+        res.json(error);
+    });
+
+
+
+
+    //I GOT A ERROR: `Cast to string failed for value "{ body: 'BLAHBLAHBLAH' }" at path "body"`|| CAN'T FIX IT
+
+
+    // db.Article.findOne({_id: req.params.id}).then(function(data){
+
+
+    //     if( data.note === undefined || null){
+    //         console.log(`NULL/UNDEFINED IDENTITY IDENTIFIED`);
+
+    //         db.Note.create(req.body).then(function(response){
+    //             return db.Article.findOneAndUpdate(
+    //                 {_id: req.params.id},
+    //                 {note: response._id},
+    //                 {new: true}
+    //             ).then(function(databasedArticle) {
+    //                 // If we were able to successfully update an Article, send it back to the client
+    //                 res.json(databasedArticle);
+    //                 console.log(databasedArticle)
+    //             });
+
+    //         }).catch(function(error){
+    //             res.json(error);
+    //         });
+
+            
+    //     }
+    //     else{
+    //         db.Note.findOneAndUpdate({_id: req.params.id}, {body: req.body}).then(function(proof){
+                
+
+    //             console.log(`JKADSIOJEJK${proof}`);
+                
+    //             res.json(proof);
+            
+    //         }).catch(function(error){
+    //             console.log(error);
+    //         })
+    //     }
+
+
+
+
+
+    // });
+
+    
+});
+
+    
+
 
 
 app.get(`/`, function (req, res) {

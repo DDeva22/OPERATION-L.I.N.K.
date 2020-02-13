@@ -25,12 +25,23 @@ $(document).ready(function(){
     });
 
     $(`.row`).on("click","#notes", function(){
-        
-        
+       
         $(`#save`).attr("value", $(this).attr(`value`))
 
         console.log($(this).attr(`value`));
         console.log($(`#save`).attr(`value`));
+
+        
+        
+        $.ajax({
+            method: `GET`,
+            url: `/articles/${$(`#save`).attr(`value`)}`,
+          }).then(function(data) {
+            
+              console.log(`FRONT END${data}`);
+              $(`#message-text`).val(`SAVED: ${data}`);
+              $(`#message-text`).html(`SAVED: ${data}`);
+        });
 
 
 
@@ -38,6 +49,31 @@ $(document).ready(function(){
 
     $(`.modal-footer`).on("click", `#save`, function(){
         console.log(`SAVED`);
+        console.log($(`#message-text`).val());
+        console.log($(`#save`).attr(`value`));
+
+
+
+        $.ajax({
+            method: `POST`,
+            url: `/articles/${$(`#save`).attr(`value`)}`,
+            data: {
+              body: $(`#message-text`).val()
+
+            }
+          }).then(function(data) {
+              console.log(data);
+              
+              
+            });
+
+
+
+
+
+
+
+
     });
 
 
