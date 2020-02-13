@@ -20,7 +20,7 @@ https://www.mongodb.com/download-center/community
 
 6. While going through the installation, make sure you deselect Compass installation when given the option.
 
-7. [file.md](Installing-MongoDB/file.md)
+7. [Contribution guidelines for this project](docs/Installing-MongoDB.md)
 
 
 
