@@ -24,8 +24,8 @@ mongoose.set('useFindAndModify', false);
 
 
 
-
-mongoose.connect(`mongodb://localhost/ScrapeRepository`, { useNewUrlParser: true });
+const MONGODB_URI = process.env.MONGODB_URI || `mongodb://localhost/ScrapeRepository`;
+mongoose.connect(MONGODB_URI);
 
 app.get(`/scrape`, function(req, res){
     axios.get(`https://www.reuters.com/news/us`).then(function(res){
