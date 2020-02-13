@@ -20,7 +20,7 @@ https://www.mongodb.com/download-center/community
 
 6. While going through the installation, make sure you deselect Compass installation when given the option.
 
-7. [Contribution guidelines for this project](docs/Installing-MongoDB.md)
+7. [Follow this guide; courtesy of The Coding Bootcamp Hosted by U of H: Austin](docs/Installing-MongoDB.md)
 
 
 
