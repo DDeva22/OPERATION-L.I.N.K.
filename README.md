@@ -34,4 +34,6 @@ https://www.mongodb.com/download-center/community
 
 3. Then type in "node server.js".
 
-4. go to your browswer and type in "Https://localhost:8080"
+4. Go to your browswer and type in "Https://localhost:3000/scrape"
+
+5. After about 5 seconds, navigate to: "Https://localhost:3000/"
