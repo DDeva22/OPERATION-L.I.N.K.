@@ -13,7 +13,7 @@ $(document).ready(function(){
                                         <div class="card-body">
                                             
                                             <p class="card-text" id = ${package[i]._id}>${package[i].title}</p>
-                                            <a href="${package[i].link}" class="btn btn-primary">Visit</a>
+                                            <a href="${package[i].link}" class="btn btn-primary" id = "visit">Visit</a>
                                             <a class="btn btn-primary" id = "notes" value = ${package[i]._id} data-toggle="modal" data-target="#Noted">Notes</a>
                                         </div>
                                     </div>
