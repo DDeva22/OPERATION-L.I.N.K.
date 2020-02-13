@@ -30,6 +30,8 @@ $(document).ready(function(){
 
         console.log($(this).attr(`value`));
         console.log($(`#save`).attr(`value`));
+        $(`#message-text`).val(``);
+        $(`#message-text`).html(``);
 
         
         
@@ -37,10 +39,20 @@ $(document).ready(function(){
             method: `GET`,
             url: `/articles/${$(`#save`).attr(`value`)}`,
           }).then(function(data) {
+              
             
               console.log(`FRONT END${data}`);
-              $(`#message-text`).val(`SAVED: ${data}`);
-              $(`#message-text`).html(`SAVED: ${data}`);
+              if(data.length > 3){
+                  console.log(`YOOOEMPTY`);
+                    $(`#message-text`).val(`SAVED: ${data}`);
+                    $(`#message-text`).html(`SAVED: ${data}`);
+              }
+              else{
+                  
+                $(`#message-text`).val(``);
+                $(`#message-text`).html(``);
+              }
+              
         });
 
 
